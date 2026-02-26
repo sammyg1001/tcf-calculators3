@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller Net Sheet — Title Company of Florida</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --gold: #b8962e;
+        --gold-light: #d4af5a;
+        --gold-faint: #f9f4e8;
+        --gold-line: #e8d89a;
+        --ink: #0e0e0e;
+        --ink2: #2c2c2c;
+        --ink3: #555;
+        --smoke: #f4f1ec;
+        --white: #ffffff;
+        --border: #e2ddd5;
+        --red: #b03a2e;
+        --green: #1a6b42;
+        --radius: 5px;
+        --font-head: "Cormorant Garamond", Georgia, serif;
+        --font-body: "DM Sans", system-ui, sans-serif;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font-body);
+        font-size: 14px;
+        background: var(--smoke);
+        color: var(--ink2);
+        line-height: 1.6;
+      }
+
+      /* HEADER */
+      .hdr {
+        background: var(--ink);
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        border-bottom: 2px solid var(--gold);
+      }
+      .hdr-inner {
+        max-width: 1080px;
+        margin: auto;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .hdr-brand h1 {
+        font-family: var(--font-head);
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--gold-light);
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+      }
+      .hdr-brand p {
+        font-size: 11px;
+        color: #888;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-top: 2px;
+      }
+      .hdr-badge {
+        background: rgba(184, 150, 46, 0.12);
+        border: 1px solid rgba(184, 150, 46, 0.3);
+        border-radius: 20px;
+        padding: 5px 14px;
+        font-size: 11px;
+        color: var(--gold-light);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      /* PAGE */
+      .page {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 26px 20px 60px;
+      }
+
+      /* DISCLAIMER */
+      .disclaimer {
+        background: var(--gold-faint);
+        border: 1px solid var(--gold-line);
+        border-left: 3px solid var(--gold);
+        border-radius: var(--radius);
+        padding: 11px 16px;
+        font-size: 12.5px;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+      .disclaimer strong {
+        color: var(--ink2);
+      }
+
+      /* GRID */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .form-grid .full {
+        grid-column: 1 / -1;
+      }
+
+      /* CARD */
+      .card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .card-head {
+        background: var(--ink);
+        padding: 10px 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .card-head .num {
+        width: 21px;
+        height: 21px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .card-head h3 {
+        font-family: var(--font-head);
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--gold-light);
+        letter-spacing: 0.02em;
+      }
+      .card-body {
+        padding: 16px 18px;
+      }
+
+      /* FORM */
+      .field {
+        margin-bottom: 13px;
+      }
+      .field:last-child {
+        margin-bottom: 0;
+      }
+      label.lbl {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--ink3);
+        margin-bottom: 4px;
+      }
+      .req {
+        color: var(--red);
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="number"],
+      input[type="date"],
+      select {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        font-family: var(--font-body);
+        font-size: 14px;
+        color: var(--ink2);
+        background: var(--white);
+        transition: border-color 0.18s, box-shadow 0.18s;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(184, 150, 46, 0.12);
+      }
+      .money {
+        display: flex;
+      }
+      .money .pfx {
+        background: var(--smoke);
+        border: 1.5px solid var(--border);
+        border-right: none;
+        border-radius: var(--radius) 0 0 var(--radius);
+        padding: 9px 11px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink3);
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .money .sfx {
+        background: var(--smoke);
+        border: 1.5px solid var(--border);
+        border-left: none;
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 9px 10px;
+        font-size: 13px;
+        color: var(--ink3);
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .money input {
+        border-radius: 0;
+        flex: 1;
+        min-width: 0;
+      }
+      .radio-group {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin-top: 2px;
+      }
+      .radio-group label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: var(--ink2);
+        cursor: pointer;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .radio-group input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--gold);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .radio-group.tight {
+        gap: 12px;
+      }
+      .check-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .check-row input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--gold);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .check-row label {
+        font-size: 13px;
+        color: var(--ink2);
+        cursor: pointer;
+        text-transform: none;
+        letter-spacing: 0;
+        font-weight: 400;
+      }
+      .sub-panel {
+        background: var(--smoke);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 13px;
+        margin-top: 9px;
+      }
+      .sub-panel .lbl {
+        color: var(--ink3);
+      }
+      .hint {
+        font-size: 11.5px;
+        color: #999;
+        margin-top: 4px;
+        font-style: italic;
+        line-height: 1.4;
+      }
+      .hint.warn {
+        color: #8b6914;
+      }
+      .divider-lbl {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #bbb;
+        margin: 13px 0 9px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .divider-lbl::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .cols-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .cols-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+      }
+
+      /* BUTTON */
+      .btn-wrap {
+        margin-top: 18px;
+      }
+      .btn-generate {
+        width: 100%;
+        padding: 15px;
+        background: var(--gold);
+        color: var(--ink);
+        font-family: var(--font-head);
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+        box-shadow: 0 4px 18px rgba(184, 150, 46, 0.32);
+      }
+      .btn-generate:hover {
+        background: var(--gold-light);
+        box-shadow: 0 6px 24px rgba(184, 150, 46, 0.42);
+      }
+      .btn-generate:active {
+        transform: translateY(1px);
+      }
+      .err-box {
+        display: none;
+        background: #fdf1f0;
+        border: 1.5px solid #e8a09a;
+        color: var(--red);
+        border-radius: var(--radius);
+        padding: 10px 14px;
+        font-size: 13px;
+        font-weight: 500;
+        margin-top: 12px;
+      }
+
+      /* RESULTS */
+      .results {
+        display: none;
+        margin-top: 30px;
+      }
+      .results-hdr {
+        background: var(--ink);
+        border-radius: var(--radius) var(--radius) 0 0;
+        border-bottom: 2px solid var(--gold);
+        padding: 18px 24px;
+      }
+      .results-hdr h2 {
+        font-family: var(--font-head);
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--gold-light);
+        letter-spacing: 0.02em;
+      }
+      .results-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px 22px;
+        margin-top: 7px;
+      }
+      .results-meta span {
+        font-size: 12px;
+        color: #aaa;
+      }
+      .results-meta span strong {
+        color: #ccc;
+        font-weight: 500;
+      }
+      .results-body {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-top: none;
+        border-radius: 0 0 var(--radius) var(--radius);
+        overflow: hidden;
+      }
+
+      /* TABLE */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      thead th {
+        background: #1a1a1a;
+        color: var(--gold-light);
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 11px 16px;
+        text-align: right;
+      }
+      thead th:first-child {
+        text-align: left;
+        width: 44%;
+      }
+      tbody tr td {
+        padding: 9px 16px;
+        border-bottom: 1px solid #f2efe8;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        color: var(--ink2);
+      }
+      tbody tr td:first-child {
+        text-align: left;
+        color: var(--ink3);
+        background: #fafaf7;
+      }
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr:hover td {
+        background: #f7f4ee;
+      }
+      tbody tr:hover td:first-child {
+        background: #f2efe8;
+      }
+      tr.sec-hdr td {
+        background: #f0ede6 !important;
+        font-size: 10.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #888 !important;
+        padding: 7px 16px;
+        border-bottom: 1px solid #e2ddd5;
+      }
+      tr.sub-row td:first-child {
+        padding-left: 28px;
+        font-size: 12px;
+        color: #999 !important;
+      }
+      tr.sub-row td {
+        color: #999;
+        font-size: 12px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #f8f5f0;
+      }
+      tr.total-row td {
+        background: #efefec !important;
+        font-weight: 700;
+        font-size: 13.5px;
+        border-top: 2px solid #d0ccc4;
+        border-bottom: 2px solid #d0ccc4;
+      }
+      tr.total-row td:first-child {
+        color: var(--ink2) !important;
+      }
+      tr.net-row td {
+        background: var(--ink) !important;
+        color: var(--gold-light) !important;
+        font-weight: 700;
+        font-size: 17px;
+        border-top: 3px solid var(--gold);
+        font-family: var(--font-head);
+        letter-spacing: 0.02em;
+      }
+      tr.net-row td:first-child {
+        background: var(--ink) !important;
+        color: var(--gold-light) !important;
+      }
+      tr.net-row td.negative {
+        color: #ff8c7a !important;
+      }
+
+      /* CHART */
+      .chart-section {
+        padding: 22px 22px;
+        border-top: 1px solid var(--border);
+      }
+      .chart-section h4 {
+        font-family: var(--font-head);
+        font-size: 16px;
+        color: var(--ink2);
+        margin-bottom: 12px;
+      }
+      .chart-wrap {
+        position: relative;
+        height: 290px;
+      }
+
+      /* DISCLAIMERS */
+      .result-disc {
+        background: var(--smoke);
+        border-top: 1px solid var(--border);
+        padding: 14px 18px;
+        font-size: 11.5px;
+        color: #888;
+        line-height: 1.7;
+      }
+      .result-disc strong {
+        color: var(--ink3);
+      }
+
+      /* PRINT BTN */
+      .btn-print {
+        width: 100%;
+        margin-top: 10px;
+        padding: 11px;
+        background: var(--white);
+        color: var(--ink2);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        font-family: var(--font-body);
+        font-size: 13.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.18s, border-color 0.18s;
+      }
+      .btn-print:hover {
+        background: var(--smoke);
+        border-color: #bbb;
+      }
+
+      /* FOOTER */
+      .footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 11px;
+        color: #aaa;
+        line-height: 2;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 700px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .cols-2,
+        .cols-3 {
+          grid-template-columns: 1fr;
+        }
+        .hdr-badge {
+          display: none;
+        }
+        table {
+          font-size: 12px;
+        }
+        thead th,
+        tbody tr td {
+          padding: 8px 10px;
+        }
+      }
+
+      /* PRINT */
+      @media print {
+        body {
+          background: white;
+        }
+        .hdr {
+          position: static;
+          background: white;
+          border-bottom: 2px solid black;
+        }
+        .hdr-brand h1 {
+          color: black;
+        }
+        .hdr-brand p {
+          color: #555;
+        }
+        .disclaimer,
+        .form-grid,
+        .btn-wrap,
+        .err-box,
+        .footer,
+        .chart-section,
+        .btn-print,
+        .result-disc {
+          display: none !important;
+        }
+        .results {
+          display: block !important;
+          margin: 0;
+        }
+        .results-hdr {
+          background: black;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+          padding: 12px 18px;
+        }
+        .results-hdr h2 {
+          font-size: 18px;
+        }
+        .results-meta {
+          gap: 3px 16px;
+        }
+        .results-meta span {
+          font-size: 11px;
+        }
+        .results-body {
+          border: 1px solid #ccc;
+        }
+        table {
+          font-size: 11px;
+        }
+        thead th {
+          padding: 7px 10px;
+          font-size: 10px;
+        }
+        tbody tr td {
+          padding: 5px 10px;
+        }
+        tr.sec-hdr td {
+          padding: 5px 10px;
+        }
+        tr.net-row td {
+          background: black !important;
+          color: gold !important;
+          font-size: 14px;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        tr.sec-hdr td {
+          background: #eee !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        tr.total-row td {
+          background: #f0f0f0 !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        @page {
+          size: letter portrait;
+          margin: 0.45in;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hdr">
+      <div class="hdr-inner">
+        <div class="hdr-brand">
+          <h1>Seller Net Sheet Generator</h1>
+          <p>Title Company of Florida &nbsp;•&nbsp; All 67 Counties</p>
+        </div>
+        <div class="hdr-badge">Florida Residential</div>
+      </div>
+    </header>
+
+    <div class="page">
+      <div class="disclaimer">
+        <strong>Important Disclaimer:</strong> This Closing Cost Estimate
+        represents Title Company of Florida's and various third parties'
+        standard fees for a typical residential transaction. All figures are
+        estimates only and may not include all costs associated with the sale.
+        For commercial or complex transactions, please contact us directly to
+        confirm accuracy.
+      </div>
+
+      <div class="form-grid">
+        <!-- 1. AGENT & SELLER -->
+        <div class="card full">
+          <div class="card-head">
+            <span class="num">1</span>
+            <h3>Agent &amp; Seller Information</h3>
+          </div>
+          <div class="card-body">
+            <div class="cols-2">
+              <div class="field">
+                <label class="lbl"
+                  >Real Estate Agent Name <span class="req">*</span></label
+                >
+                <input id="agentName" type="text" placeholder="Jane Smith" />
+              </div>
+              <div class="field">
+                <label class="lbl">Agent Email</label>
+                <input
+                  id="agentEmail"
+                  type="email"
+                  placeholder="jane@brokerage.com"
+                />
+              </div>
+              <div class="field">
+                <label class="lbl">Seller(s) Name</label>
+                <input
+                  id="sellerName"
+                  type="text"
+                  placeholder="John &amp; Mary Doe"
+                />
+              </div>
+              <div class="field">
+                <label class="lbl">Company / Brokerage</label>
+                <input id="company" type="text" placeholder="ABC Realty" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. PROPERTY -->
+        <div class="card full">
+          <div class="card-head">
+            <span class="num">2</span>
+            <h3>Property Details</h3>
+          </div>
+          <div class="card-body">
+            <div class="cols-2">
+              <div class="field">
+                <label class="lbl">Property Address</label>
+                <input
+                  id="address"
+                  type="text"
+                  placeholder="123 Palm Ave, Orlando, FL 32801"
+                />
+              </div>
+              <div class="field">
+                <label class="lbl">Estimated Closing Date</label>
+                <input id="closingDate" type="date" />
+                <p class="hint">
+                  Used for tax, CDD &amp; HOA proration. Leave blank to skip.
+                </p>
+              </div>
+            </div>
+            <div class="divider-lbl">Purchase Price Scenarios</div>
+            <div class="cols-3">
+              <div class="field">
+                <label class="lbl">Low Price</label>
+                <div class="money">
+                  <span class="pfx">$</span
+                  ><input id="lowPrice" type="number" value="450000" min="0" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="lbl">Mid Price</label>
+                <div class="money">
+                  <span class="pfx">$</span
+                  ><input id="midPrice" type="number" value="500000" min="0" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="lbl">High Price</label>
+                <div class="money">
+                  <span class="pfx">$</span
+                  ><input id="highPrice" type="number" value="550000" min="0" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. TRANSACTION DETAILS -->
+        <div class="card">
+          <div class="card-head">
+            <span class="num">3</span>
+            <h3>Transaction Details</h3>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label class="lbl">Who Pays Owner's Title Insurance?</label>
+              <div class="radio-group">
+                <label
+                  ><input
+                    type="radio"
+                    name="titlePaidBy"
+                    value="seller"
+                    checked
+                  />
+                  Seller</label
+                >
+                <label
+                  ><input type="radio" name="titlePaidBy" value="buyer" />
+                  Buyer</label
+                >
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="lbl">New Survey Required?</label>
+              <div class="radio-group">
+                <label
+                  ><input type="radio" name="survey" value="no" checked />
+                  No</label
+                >
+                <label
+                  ><input type="radio" name="survey" value="yes" /> Yes</label
+                >
+              </div>
+              <div id="surveyAmtDiv" style="display: none" class="sub-panel">
+                <label class="lbl">Survey Amount</label>
+                <div class="money">
+                  <span class="pfx">$</span
+                  ><input id="surveyAmt" type="number" value="450" min="0" />
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="lbl">Municipal Lien Search Required?</label>
+              <div class="radio-group">
+                <label
+                  ><input type="radio" name="lienReq" value="yes" checked />
+                  Yes</label
+                >
+                <label
+                  ><input type="radio" name="lienReq" value="no" /> No</label
+                >
+              </div>
+              <div id="lienAmtDiv" class="sub-panel">
+                <label class="lbl">Lien Search Fee</label>
+                <div class="money">
+                  <span class="pfx">$</span
+                  ><input id="lienSearch" type="number" value="105" min="0" />
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="lbl">HOA or Condominium Association?</label>
+              <div class="radio-group">
+                <label
+                  ><input type="radio" name="hoa" value="no" checked />
+                  No</label
+                >
+                <label><input type="radio" name="hoa" value="yes" /> Yes</label>
+              </div>
+              <div id="hoaPanel" style="display: none" class="sub-panel">
+                <label class="lbl" style="margin-bottom: 6px"
+                  >HOA / Condo Fee Frequency</label
+                >
+                <div class="radio-group tight" style="margin-bottom: 10px">
+                  <label
+                    ><input
+                      type="radio"
+                      name="hoaFreq"
+                      value="monthly"
+                      checked
+                    />
+                    Monthly</label
+                  >
+                  <label
+                    ><input type="radio" name="hoaFreq" value="quarterly" />
+                    Quarterly</label
+                  >
+                  <label
+                    ><input type="radio" name="hoaFreq" value="annual" />
+                    Annual</label
+                  >
+                </div>
+                <label class="lbl">Fee Amount</label>
+                <div class="money">
+                  <span class="pfx">$</span
+                  ><input
+                    id="hoaFee"
+                    type="number"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                  />
+                </div>
+                <p class="hint">
+                  Used to calculate prorated HOA credit at closing.
+                </p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="lbl">Providing Buyer a Home Warranty?</label>
+              <div class="radio-group">
+                <label
+                  ><input type="radio" name="warranty" value="no" checked />
+                  No</label
+                >
+                <label
+                  ><input type="radio" name="warranty" value="yes" /> Yes</label
+                >
+              </div>
+              <div id="warrantyPanel" style="display: none" class="sub-panel">
+                <label class="lbl">Warranty Amount</label>
+                <div class="money">
+                  <span class="pfx">$</span
+                  ><input
+                    id="warrantyAmt"
+                    type="number"
+                    value="450"
+                    min="0"
+                    step="0.01"
+                  />
+                </div>
+                <p class="hint warn">
+                  Defaults to $450 if left blank after selecting Yes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. COMMISSIONS & FEES -->
+        <div class="card">
+          <div class="card-head">
+            <span class="num">4</span>
+            <h3>Commissions &amp; Fees</h3>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label class="lbl">Total Real Estate Commission</label>
+              <div class="money">
+                <input
+                  id="totalComm"
+                  type="number"
+                  step="0.1"
+                  value="6"
+                  min="0"
+                /><span class="sfx">%</span>
+              </div>
+            </div>
+
+            <div class="check-row">
+              <input type="checkbox" id="splitComm" />
+              <label for="splitComm"
+                >Split between Listing &amp; Selling Agent</label
+              >
+            </div>
+
+            <div
+              id="splitPanel"
+              style="display: none; margin-top: 10px"
+              class="sub-panel"
+            >
+              <div class="cols-2">
+                <div class="field">
+                  <label class="lbl">Listing Agent %</label>
+                  <div class="money">
+                    <input
+                      id="listingComm"
+                      type="number"
+                      step="0.1"
+                      value="3"
+                      min="0"
+                    /><span class="sfx">%</span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="lbl">Selling Agent %</label>
+                  <div class="money">
+                    <input
+                      id="sellingComm"
+                      type="number"
+                      step="0.1"
+                      value="3"
+                      min="0"
+                    /><span class="sfx">%</span>
+                  </div>
+                </div>
+              </div>
+              <p class="hint">
+                Sub-totals shown separately in results below total commission.
+              </p>
+            </div>
+
+            <div class="field" style="margin-top: 14px">
+              <label class="lbl">Broker / Transaction Fee</label>
+              <div class="money">
+                <span class="pfx">$</span
+                ><input id="brokerFee" type="number" value="499" min="0" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="lbl"
+                >Amount Paid Toward Buyer's Closing Costs</label
+              >
+              <div class="money">
+                <span class="pfx">$</span
+                ><input id="sellerConcession" type="number" value="0" min="0" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="lbl">Mortgage Payoff(s)</label>
+              <div class="money">
+                <span class="pfx">$</span
+                ><input id="payoff1" type="number" value="0" min="0" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="lbl">Other Closing Costs (e.g. Repairs)</label>
+              <div class="money">
+                <span class="pfx">$</span
+                ><input id="otherCosts" type="number" value="0" min="0" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. PRORATIONS -->
+        <div class="card full">
+          <div class="card-head">
+            <span class="num">5</span>
+            <h3>
+              Prorations
+              <span style="font-size: 13px; font-weight: 400; color: #888"
+                >(Optional)</span
+              >
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label class="lbl">Current Year Property Taxes</label>
+              <div class="money">
+                <span class="pfx">$</span
+                ><input id="annualTaxes" type="number" value="0" min="0" />
+              </div>
+            </div>
+            <div class="field" style="margin-top: 10px">
+              <label class="lbl"
+                >Have property taxes been paid for the closing year?</label
+              >
+              <div class="radio-group">
+                <label
+                  ><input type="radio" name="taxPaid" value="no" checked />
+                  No</label
+                >
+                <label
+                  ><input type="radio" name="taxPaid" value="yes" /> Yes —
+                  Already Paid</label
+                >
+              </div>
+              <p class="hint warn" style="margin-top: 5px">
+                (Note: Answer is usually "No" except in November or December of
+                the closing year.)
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENERATE BUTTON -->
+      <div class="btn-wrap">
+        <button class="btn-generate" id="generateBtn">
+          Generate Seller Net Sheet
+        </button>
+      </div>
+      <div class="err-box" id="errBox"></div>
+
+      <!-- RESULTS -->
+      <div class="results" id="results">
+        <div class="results-hdr">
+          <h2>Estimate of Closing Costs</h2>
+          <div class="results-meta">
+            <span><strong>Property:</strong> <span id="rAddress">—</span></span>
+            <span
+              ><strong>Closing Date:</strong> <span id="rDate">—</span></span
+            >
+            <span><strong>Seller(s):</strong> <span id="rSeller">—</span></span>
+            <span
+              ><strong>Real Estate Agent:</strong>
+              <span id="rAgent">—</span></span
+            >
+          </div>
+        </div>
+
+        <div class="results-body">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Low</th>
+                <th>Mid</th>
+                <th>High</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Purchase Price</strong></td>
+                <td id="rLowPrice"></td>
+                <td id="rMidPrice"></td>
+                <td id="rHighPrice"></td>
+              </tr>
+
+              <tr class="sec-hdr">
+                <td colspan="4">Closing Costs &amp; Charges</td>
+              </tr>
+
+              <tr>
+                <td>Documentary Stamp Tax on Deed (0.70%)</td>
+                <td id="rLowStamp"></td>
+                <td id="rMidStamp"></td>
+                <td id="rHighStamp"></td>
+              </tr>
+              <tr id="rowTitle">
+                <td>Owner's Title Insurance Premium</td>
+                <td id="rLowTitle"></td>
+                <td id="rMidTitle"></td>
+                <td id="rHighTitle"></td>
+              </tr>
+              <tr>
+                <td>Search Fee for Title Commitment</td>
+                <td id="rLowSearch"></td>
+                <td id="rMidSearch"></td>
+                <td id="rHighSearch"></td>
+              </tr>
+              <tr id="rowLien">
+                <td>Municipal Lien Search**</td>
+                <td id="rLowLien"></td>
+                <td id="rMidLien"></td>
+                <td id="rHighLien"></td>
+              </tr>
+              <tr id="rowSurvey">
+                <td>Survey**</td>
+                <td id="rLowSurvey"></td>
+                <td id="rMidSurvey"></td>
+                <td id="rHighSurvey"></td>
+              </tr>
+              <tr id="rowEstoppel">
+                <td>Estoppel Fee** (HOA / Condo)</td>
+                <td id="rLowEstoppel"></td>
+                <td id="rMidEstoppel"></td>
+                <td id="rHighEstoppel"></td>
+              </tr>
+              <tr id="rowWarranty">
+                <td>Home Warranty**</td>
+                <td id="rLowWarranty"></td>
+                <td id="rMidWarranty"></td>
+                <td id="rHighWarranty"></td>
+              </tr>
+              <tr>
+                <td id="commLabel">Total Real Estate Commission</td>
+                <td id="rLowComm"></td>
+                <td id="rMidComm"></td>
+                <td id="rHighComm"></td>
+              </tr>
+              <tr class="sub-row" id="rowListingComm">
+                <td>↳ Listing Agent Commission</td>
+                <td id="rLowListing"></td>
+                <td id="rMidListing"></td>
+                <td id="rHighListing"></td>
+              </tr>
+              <tr class="sub-row" id="rowSellingComm">
+                <td>↳ Selling Agent Commission</td>
+                <td id="rLowSelling"></td>
+                <td id="rMidSelling"></td>
+                <td id="rHighSelling"></td>
+              </tr>
+              <tr id="rowBroker">
+                <td>Broker / Transaction Fee</td>
+                <td id="rLowBroker"></td>
+                <td id="rMidBroker"></td>
+                <td id="rHighBroker"></td>
+              </tr>
+              <tr id="rowConcession">
+                <td>Seller Concession (Buyer's Costs)</td>
+                <td id="rLowConcession"></td>
+                <td id="rMidConcession"></td>
+                <td id="rHighConcession"></td>
+              </tr>
+              <tr id="rowOther">
+                <td>Other Closing Costs</td>
+                <td id="rLowOther"></td>
+                <td id="rMidOther"></td>
+                <td id="rHighOther"></td>
+              </tr>
+
+              <tr class="sec-hdr">
+                <td colspan="4">Payoffs &amp; Prorations</td>
+              </tr>
+
+              <tr id="rowPayoff">
+                <td>Mortgage Payoff(s)</td>
+                <td id="rLowPayoff"></td>
+                <td id="rMidPayoff"></td>
+                <td id="rHighPayoff"></td>
+              </tr>
+              <tr id="rowTax">
+                <td>Tax Proration (Seller's Share)</td>
+                <td id="rLowTax"></td>
+                <td id="rMidTax"></td>
+                <td id="rHighTax"></td>
+              </tr>
+              <tr id="rowCdd">
+                <td>CDD Proration</td>
+                <td id="rLowCdd"></td>
+                <td id="rMidCdd"></td>
+                <td id="rHighCdd"></td>
+              </tr>
+              <tr id="rowHoaProration">
+                <td>HOA Fees Proration</td>
+                <td id="rLowHoa"></td>
+                <td id="rMidHoa"></td>
+                <td id="rHighHoa"></td>
+              </tr>
+
+              <tr class="total-row">
+                <td>Total Estimated Closing Costs</td>
+                <td id="rLowTotal"></td>
+                <td id="rMidTotal"></td>
+                <td id="rHighTotal"></td>
+              </tr>
+              <tr class="net-row">
+                <td>NET PROCEEDS TO SELLER</td>
+                <td id="rLowNet"></td>
+                <td id="rMidNet"></td>
+                <td id="rHighNet"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="chart-section">
+            <h4>Net Proceeds vs. Total Closing Costs</h4>
+            <div class="chart-wrap">
+              <canvas id="chart"></canvas>
+            </div>
+          </div>
+
+          <div class="result-disc">
+            <strong>*</strong> The above estimate represents Title Company of
+            Florida's and various third parties' standard fees for a typical
+            residential transaction. Amounts are estimates only and may not
+            include all costs such as mortgage payoffs, delinquent taxes, or
+            title-clearing issues.<br />
+            <strong>**</strong> This is a service provided by a third party and
+            is provided only as an estimate.
+          </div>
+        </div>
+
+        <button class="btn-print" onclick="window.print()">
+          🖨&nbsp; Print / Save as PDF
+        </button>
+      </div>
+
+      <div class="footer">
+        Title Company of Florida, LLC &nbsp;•&nbsp; Licensed Florida Title
+        Insurance Agency &nbsp;•&nbsp; License #G311300<br />
+        Title insurance rates regulated by the State of Florida &nbsp;•&nbsp;
+        Underwriter: Fidelity National Title Insurance Company
+      </div>
+    </div>
+
+    <script>
+      let chartInst = null;
+
+      /* ── Florida tiered title premium (OIR-B1-1690) ── */
+      function calcTitle(p) {
+        if (p <= 0) return 0;
+        let v = 0;
+        if (p <= 100000) {
+          v = Math.max(100, p * 0.00575);
+        } else {
+          v = 575;
+          v += Math.min(p - 100000, 900000) * 0.005;
+          if (p > 1000000) v += Math.min(p - 1000000, 4000000) * 0.0025;
+          if (p > 5000000) v += (p - 5000000) * 0.00225;
+        }
+        return Math.ceil(v * 100) / 100;
+      }
+
+      function fmt(n) {
+        return (isNaN(n) ? 0 : n).toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      }
+
+      function daysInYear(y) {
+        return y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0) ? 366 : 365;
+      }
+
+      function prorate(annual, ds) {
+        if (!ds || annual <= 0) return 0;
+        const [y, m, d] = ds.split("-").map(Number);
+        const close = new Date(y, m - 1, d);
+        if (isNaN(close)) return 0;
+        const daysOwned = Math.round((close - new Date(y, 0, 1)) / 86400000);
+        return Math.round((annual / daysInYear(y)) * daysOwned * 100) / 100;
+      }
+
+      function calcHoaProration(amt, freq, ds) {
+        if (!ds || amt <= 0) return 0;
+        const [y, m, d] = ds.split("-").map(Number);
+        const close = new Date(y, m - 1, d);
+        if (isNaN(close)) return 0;
+        if (freq === "monthly") {
+          const dim = new Date(y, m, 0).getDate();
+          return Math.round((amt / dim) * (dim - d + 1) * 100) / 100;
+        }
+        if (freq === "quarterly") {
+          const qm = Math.floor((m - 1) / 3) * 3;
+          const qStart = new Date(y, qm, 1);
+          const qEnd = new Date(y, qm + 3, 0);
+          const total = Math.round((qEnd - qStart) / 86400000) + 1;
+          const rem = Math.round((qEnd - close) / 86400000);
+          return Math.round((amt / total) * rem * 100) / 100;
+        }
+        if (freq === "annual") {
+          const rem = Math.round((new Date(y, 11, 31) - close) / 86400000);
+          return Math.round((amt / daysInYear(y)) * rem * 100) / 100;
+        }
+        return 0;
+      }
+
+      function radio(name) {
+        const el = document.querySelector(`input[name="${name}"]:checked`);
+        return el ? el.value : "";
+      }
+      function tog(id, show) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = show ? "block" : "none";
+      }
+      function showRow(id, v) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = v ? "" : "none";
+      }
+
+      /* ── Toggles ── */
+      document
+        .querySelectorAll('input[name="survey"]')
+        .forEach((r) =>
+          r.addEventListener("change", () =>
+            tog("surveyAmtDiv", radio("survey") === "yes")
+          )
+        );
+      document
+        .querySelectorAll('input[name="lienReq"]')
+        .forEach((r) =>
+          r.addEventListener("change", () =>
+            tog("lienAmtDiv", radio("lienReq") === "yes")
+          )
+        );
+      document
+        .querySelectorAll('input[name="hoa"]')
+        .forEach((r) =>
+          r.addEventListener("change", () =>
+            tog("hoaPanel", radio("hoa") === "yes")
+          )
+        );
+      document
+        .querySelectorAll('input[name="warranty"]')
+        .forEach((r) =>
+          r.addEventListener("change", () =>
+            tog("warrantyPanel", radio("warranty") === "yes")
+          )
+        );
+      document
+        .getElementById("splitComm")
+        .addEventListener("change", function () {
+          tog("splitPanel", this.checked);
+        });
+      ["listingComm", "sellingComm"].forEach((id) => {
+        document.getElementById(id).addEventListener("input", () => {
+          const l =
+            parseFloat(document.getElementById("listingComm").value) || 0;
+          const s =
+            parseFloat(document.getElementById("sellingComm").value) || 0;
+          document.getElementById("totalComm").value = (l + s).toFixed(1);
+        });
+      });
+
+      /* ── Generate ── */
+      document.getElementById("generateBtn").addEventListener("click", () => {
+        const errBox = document.getElementById("errBox");
+        const agentName = document.getElementById("agentName").value.trim();
+        const errs = [];
+        if (!agentName) errs.push("Agent name is required.");
+        const lowP = parseFloat(document.getElementById("lowPrice").value) || 0;
+        const midP = parseFloat(document.getElementById("midPrice").value) || 0;
+        const highP =
+          parseFloat(document.getElementById("highPrice").value) || 0;
+        if (lowP <= 0 && midP <= 0 && highP <= 0)
+          errs.push("Enter at least one purchase price greater than $0.");
+        if (errs.length) {
+          errBox.innerHTML = errs.join("<br>");
+          errBox.style.display = "block";
+          errBox.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+        errBox.style.display = "none";
+
+        const ds = document.getElementById("closingDate").value;
+        const titleBySel = radio("titlePaidBy") === "seller";
+        const lienReqYes = radio("lienReq") === "yes";
+        const lienAmt = lienReqYes
+          ? parseFloat(document.getElementById("lienSearch").value) || 0
+          : 0;
+        const surveyYes = radio("survey") === "yes";
+        const surveyAmt = surveyYes
+          ? parseFloat(document.getElementById("surveyAmt").value) || 0
+          : 0;
+        const hoaYes = radio("hoa") === "yes";
+        const estoppel = hoaYes ? 250 : 0;
+        const hoaFeeAmt = hoaYes
+          ? parseFloat(document.getElementById("hoaFee").value) || 0
+          : 0;
+        const hoaFreq = radio("hoaFreq") || "monthly";
+        const hoaPro = calcHoaProration(hoaFeeAmt, hoaFreq, ds);
+        const warYes = radio("warranty") === "yes";
+        const warAmt = warYes
+          ? parseFloat(document.getElementById("warrantyAmt").value) || 450
+          : 0;
+        const totalCommPct =
+          (parseFloat(document.getElementById("totalComm").value) || 0) / 100;
+        const splitOn = document.getElementById("splitComm").checked;
+        const listingPct =
+          (parseFloat(document.getElementById("listingComm").value) || 0) / 100;
+        const sellingPct =
+          (parseFloat(document.getElementById("sellingComm").value) || 0) / 100;
+        const brokerFee =
+          parseFloat(document.getElementById("brokerFee").value) || 0;
+        const concession =
+          parseFloat(document.getElementById("sellerConcession").value) || 0;
+        const payoff =
+          parseFloat(document.getElementById("payoff1").value) || 0;
+        const otherCosts =
+          parseFloat(document.getElementById("otherCosts").value) || 0;
+        const annualTaxes =
+          parseFloat(document.getElementById("annualTaxes").value) || 0;
+        const taxPaid = radio("taxPaid") === "yes";
+        const SEARCH_FEE = 85;
+
+        const taxPro = taxPaid ? 0 : prorate(annualTaxes, ds);
+        const cddPro = 0; // CDD removed
+
+        // Meta
+        document.getElementById("rAddress").textContent =
+          document.getElementById("address").value || "Not specified";
+        document.getElementById("rDate").textContent = ds
+          ? new Date(ds + "T12:00:00").toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          : "Not specified";
+        document.getElementById("rAgent").textContent =
+          agentName +
+          (document.getElementById("company").value
+            ? " — " + document.getElementById("company").value
+            : "");
+        document.getElementById("rSeller").textContent =
+          document.getElementById("sellerName").value || "Not specified";
+
+        const pct = (totalCommPct * 100).toFixed(2).replace(/\.?0+$/, "") + "%";
+        document.getElementById(
+          "commLabel"
+        ).textContent = `Total Real Estate Commission (${pct})`;
+
+        // Row visibility
+        showRow("rowLien", lienReqYes);
+        showRow("rowSurvey", surveyYes);
+        showRow("rowEstoppel", hoaYes);
+        showRow("rowWarranty", warYes);
+        showRow("rowListingComm", splitOn);
+        showRow("rowSellingComm", splitOn);
+        showRow("rowBroker", brokerFee > 0);
+        showRow("rowConcession", concession > 0);
+        showRow("rowOther", otherCosts > 0);
+        showRow("rowPayoff", payoff > 0);
+        showRow("rowTax", taxPro > 0);
+        showRow("rowCdd", cddPro > 0);
+        showRow("rowHoaProration", hoaPro > 0);
+
+        // Scenarios
+        const scenarios = [
+          { price: lowP, p: "rLow" },
+          { price: midP, p: "rMid" },
+          { price: highP, p: "rHigh" },
+        ];
+        const totals = {},
+          nets = {};
+
+        scenarios.forEach(({ price, p }) => {
+          const docStamp = Math.round(price * 0.007 * 100) / 100;
+          const title = price > 0 && titleBySel ? calcTitle(price) : 0;
+          const search = price > 0 ? SEARCH_FEE : 0;
+          const comm = price * totalCommPct;
+          const listing = price * listingPct;
+          const selling = price * sellingPct;
+          const total =
+            docStamp +
+            title +
+            search +
+            lienAmt +
+            surveyAmt +
+            estoppel +
+            warAmt +
+            comm +
+            brokerFee +
+            concession +
+            otherCosts +
+            payoff +
+            taxPro +
+            cddPro +
+            hoaPro;
+          const net = price - total;
+          totals[p] = total;
+          nets[p] = net;
+
+          const s = (id, v) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = fmt(v);
+          };
+          s(p + "Price", price);
+          s(p + "Stamp", docStamp);
+          s(p + "Title", title);
+          s(p + "Search", search);
+          s(p + "Lien", lienAmt);
+          s(p + "Survey", surveyAmt);
+          s(p + "Estoppel", estoppel);
+          s(p + "Warranty", warAmt);
+          s(p + "Comm", comm);
+          s(p + "Listing", listing);
+          s(p + "Selling", selling);
+          s(p + "Broker", brokerFee);
+          s(p + "Concession", concession);
+          s(p + "Other", otherCosts);
+          s(p + "Payoff", payoff);
+          s(p + "Tax", taxPro);
+          s(p + "Cdd", cddPro);
+          s(p + "Hoa", hoaPro);
+          s(p + "Total", total);
+          const netEl = document.getElementById(p + "Net");
+          if (netEl) {
+            netEl.textContent = fmt(net);
+            netEl.className = net < 0 ? "negative" : "";
+          }
+        });
+
+        // Chart
+        const active = scenarios.filter((s) => s.price > 0);
+        const labels = active.map(
+          (s) =>
+            s.p
+              .replace("rLow", "Low")
+              .replace("rMid", "Mid")
+              .replace("rHigh", "High") +
+            "\n" +
+            fmt(s.price)
+        );
+        if (chartInst) {
+          chartInst.destroy();
+          chartInst = null;
+        }
+        chartInst = new Chart(
+          document.getElementById("chart").getContext("2d"),
+          {
+            type: "bar",
+            data: {
+              labels,
+              datasets: [
+                {
+                  label: "Net Proceeds to Seller",
+                  data: active.map((s) => Math.max(0, nets[s.p])),
+                  backgroundColor: "rgba(184,150,46,0.85)",
+                  borderColor: "rgba(184,150,46,1)",
+                  borderWidth: 1.5,
+                  borderRadius: 4,
+                },
+                {
+                  label: "Total Closing Costs",
+                  data: active.map((s) => totals[s.p]),
+                  backgroundColor: "rgba(14,14,14,0.82)",
+                  borderColor: "rgba(14,14,14,1)",
+                  borderWidth: 1.5,
+                  borderRadius: 4,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: "top",
+                  labels: {
+                    font: { family: "DM Sans", size: 12 },
+                    padding: 18,
+                  },
+                },
+                tooltip: {
+                  callbacks: {
+                    label: (ctx) =>
+                      " " + ctx.dataset.label + ": " + fmt(ctx.parsed.y),
+                  },
+                },
+              },
+              scales: {
+                x: {
+                  grid: { display: false },
+                  ticks: { font: { family: "DM Sans", size: 12 } },
+                },
+                y: {
+                  beginAtZero: true,
+                  grid: { color: "rgba(0,0,0,0.05)" },
+                  ticks: {
+                    font: { family: "DM Sans", size: 11 },
+                    callback: (v) => "$" + (v / 1000).toFixed(0) + "k",
+                  },
+                },
+              },
+            },
+          }
+        );
+
+        const res = document.getElementById("results");
+        res.style.display = "block";
+        setTimeout(
+          () => res.scrollIntoView({ behavior: "smooth", block: "start" }),
+          80
+        );
+
+        // ── Basin submission ──
+        try {
+          const payload = {
+            agent_name: agentName,
+            agent_email: document.getElementById("agentEmail").value || "",
+            seller_name: document.getElementById("sellerName").value || "",
+            company: document.getElementById("company").value || "",
+            property_address: document.getElementById("address").value || "",
+            closing_date: ds || "",
+            low_price: lowP,
+            mid_price: midP,
+            high_price: highP,
+            title_paid_by: radio("titlePaidBy"),
+            survey: radio("survey"),
+            lien_search: lienReqYes ? lienAmt : 0,
+            hoa: hoaYes ? "yes" : "no",
+            hoa_fee: hoaFeeAmt,
+            hoa_freq: hoaFreq,
+            home_warranty: warYes ? warAmt : 0,
+            total_commission_pct: (totalCommPct * 100).toFixed(2),
+            split_commission: splitOn,
+            listing_pct: (listingPct * 100).toFixed(2),
+            selling_pct: (sellingPct * 100).toFixed(2),
+            broker_fee: brokerFee,
+            seller_concession: concession,
+            mortgage_payoff: payoff,
+            other_costs: otherCosts,
+            annual_taxes: annualTaxes,
+            taxes_paid: taxPaid ? "yes" : "no",
+            low_net_proceeds: nets["rLow"] || 0,
+            mid_net_proceeds: nets["rMid"] || 0,
+            high_net_proceeds: nets["rHigh"] || 0,
+            low_total_costs: totals["rLow"] || 0,
+            mid_total_costs: totals["rMid"] || 0,
+            high_total_costs: totals["rHigh"] || 0,
+            submitted_at: new Date().toISOString(),
+          };
+          fetch("https://usebasin.com/f/ece19bf7bf09", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(payload),
+          }); // fire and forget — no await so it never blocks the UI
+        } catch (e) {
+          /* silent — never block user for analytics */
+          console.error(e);
+        }
+      });
+    </script>
+  </body>
+</html>

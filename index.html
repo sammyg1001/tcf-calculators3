@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Closing Cost Calculators — Title Company of Florida</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --gold: #b8962e;
+        --gold-light: #d4af5a;
+        --gold-faint: #f9f4e8;
+        --gold-line: #e8d89a;
+        --ink: #0e0e0e;
+        --ink2: #2c2c2c;
+        --ink3: #666;
+        --smoke: #f4f1ec;
+        --white: #ffffff;
+        --border: #e2ddd5;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'DM Sans', system-ui, sans-serif;
+        background: var(--ink);
+        color: var(--white);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── GRAIN OVERLAY ── */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ── GOLD LINE TOP ── */
+      .top-line {
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          var(--gold-light),
+          var(--gold),
+          transparent
+        );
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── HEADER ── */
+      header {
+        position: relative;
+        z-index: 1;
+        padding: 28px 40px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--gold-light);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: #555;
+        font-weight: 400;
+        margin: 0 8px;
+      }
+
+      .phone {
+        font-size: 12px;
+        color: #666;
+        letter-spacing: 0.08em;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 24px 40px;
+        text-align: center;
+      }
+
+      .eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .eyebrow::before,
+      .eyebrow::after {
+        content: '';
+        width: 32px;
+        height: 1px;
+        background: var(--gold);
+        opacity: 0.5;
+      }
+
+      h1 {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: clamp(36px, 7vw, 72px);
+        font-weight: 600;
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+        color: var(--white);
+        margin-bottom: 10px;
+      }
+
+      h1 em {
+        font-style: italic;
+        color: var(--gold-light);
+      }
+
+      .subtitle {
+        font-size: 15px;
+        color: #888;
+        font-weight: 300;
+        margin-bottom: 56px;
+        letter-spacing: 0.02em;
+        max-width: 420px;
+      }
+
+      /* ── CARDS ── */
+      .cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        max-width: 760px;
+        width: 100%;
+        margin-bottom: 56px;
+      }
+
+      .card {
+        position: relative;
+        background: #161616;
+        border: 1px solid #2a2a2a;
+        border-radius: 8px;
+        padding: 36px 32px 32px;
+        text-decoration: none;
+        text-align: left;
+        transition:
+          border-color 0.25s,
+          transform 0.25s,
+          box-shadow 0.25s;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.25s;
+      }
+
+      .card:hover {
+        border-color: rgba(184, 150, 46, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+      }
+
+      .card:hover::before {
+        opacity: 1;
+      }
+
+      .card-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(184, 150, 46, 0.1);
+        border: 1px solid rgba(184, 150, 46, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-size: 20px;
+      }
+
+      .card-tag {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+        background: rgba(184, 150, 46, 0.1);
+        border: 1px solid rgba(184, 150, 46, 0.2);
+        border-radius: 20px;
+        padding: 3px 10px;
+        margin-bottom: 14px;
+      }
+
+      .card h2 {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 26px;
+        font-weight: 600;
+        color: var(--white);
+        line-height: 1.15;
+        margin-bottom: 10px;
+        letter-spacing: 0.01em;
+      }
+
+      .card p {
+        font-size: 13px;
+        color: #777;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      .card-features {
+        list-style: none;
+        margin-bottom: 28px;
+      }
+
+      .card-features li {
+        font-size: 12px;
+        color: #666;
+        padding: 4px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card-features li::before {
+        content: '';
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex-shrink: 0;
+      }
+
+      .card-cta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--gold-light);
+        letter-spacing: 0.04em;
+        transition: gap 0.2s;
+      }
+
+      .card:hover .card-cta {
+        gap: 12px;
+      }
+
+      .card-cta svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.2s;
+      }
+
+      .card:hover .card-cta svg {
+        transform: translateX(3px);
+      }
+
+      /* ── DIVIDER ── */
+      .divider {
+        width: 1px;
+        background: linear-gradient(180deg, transparent, #333, transparent);
+        position: absolute;
+        top: 20%;
+        bottom: 20%;
+        left: 50%;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid #1e1e1e;
+        padding: 24px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      footer p {
+        font-size: 11px;
+        color: #444;
+        line-height: 1.8;
+      }
+
+      footer a {
+        color: #555;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        color: var(--gold);
+      }
+
+      .fl-badge {
+        font-size: 10px;
+        color: #444;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        border: 1px solid #2a2a2a;
+        border-radius: 20px;
+        padding: 4px 12px;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 640px) {
+        header {
+          padding: 20px 20px 0;
+        }
+
+        .phone {
+          display: none;
+        }
+
+        .hero {
+          padding: 44px 20px 32px;
+        }
+
+        .cards {
+          grid-template-columns: 1fr;
+          gap: 12px;
+          max-width: 440px;
+        }
+
+        .card {
+          padding: 28px 24px 24px;
+        }
+
+        footer {
+          padding: 20px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="top-line"></div>
+
+    <header>
+      <a class="logo" href="/">Title Company<span>|</span>of Florida</a>
+      <span class="phone">904-93-TITLE</span>
+    </header>
+
+    <main class="hero">
+      <div class="eyebrow">Closing Cost Tools</div>
+      <h1>Know your numbers<br /><em>before you close.</em></h1>
+      <p class="subtitle">
+        Florida-specific calculators built for agents and homeowners. Accurate
+        estimates in under a minute.
+      </p>
+
+      <div class="cards">
+        <!-- SELLER -->
+        <a class="card" href="/seller-net-sheet.html">
+          <div class="card-icon">🏡</div>
+          <span class="card-tag">Seller</span>
+          <h2>Seller Net Sheet</h2>
+          <p>
+            Estimate your net proceeds across three price scenarios with every
+            Florida closing cost accounted for.
+          </p>
+          <ul class="card-features">
+            <li>Doc stamps, title premium, commissions</li>
+            <li>HOA estoppel &amp; proration</li>
+            <li>Tax proration from closing date</li>
+            <li>Low / Mid / High scenarios</li>
+            <li>Bar chart + printable report</li>
+          </ul>
+          <div class="card-cta">
+            Open Calculator
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- BUYER -->
+        <a class="card" href="/buyer-closing-cost.html">
+          <div class="card-icon">🔑</div>
+          <span class="card-tag">Buyer</span>
+          <h2>Buyer Closing Cost</h2>
+          <p>
+            Calculate your full cash-to-close estimate including prepaids,
+            escrow reserves, and lender fees.
+          </p>
+          <ul class="card-features">
+            <li>Conventional, FHA &amp; VA loans</li>
+            <li>Lender's title, doc stamps, recording</li>
+            <li>Prepaids &amp; escrow reserves</li>
+            <li>Seller credit &amp; earnest money offset</li>
+            <li>Upfront MI / VA funding fee</li>
+          </ul>
+          <div class="card-cta">
+            Open Calculator
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </div>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        Title Company of Florida, LLC &nbsp;·&nbsp; Licensed Florida Title
+        Insurance Agency &nbsp;·&nbsp; License #G311300<br />
+        Underwriter: Fidelity National Title Insurance Company &nbsp;·&nbsp;
+        <a href="https://titlecompanyofflorida.com"
+          >titlecompanyofflorida.com</a
+        >
+      </p>
+      <span class="fl-badge">All 67 Florida Counties</span>
+    </footer>
+  </body>
+</html>
